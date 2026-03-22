@@ -3,51 +3,490 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page</title>
+    <title>DevOps Portfolio - Jenkins CI/CD Pipeline</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
             color: #333;
-            margin: 0;
+            background-color: #f4f7f9;
         }
-        .datetime {
-            font-size: 18px;
-            color: #666;
-            margin-top: 20px;
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 0.8rem;
+        }
+
+        .card li {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Architecture Section */
+        .architecture-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            line-height: 1.8;
+            color: #333;
+            margin: 1.5rem 0;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Step Section */
+        .step {
+            display: flex;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 0.8rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Pipeline Flow */
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .flow-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome!</h1>
-        <p>Thank you for visiting our webserver.</p>
-        <div class="datetime">
-            <p id="datetimeDisplay"></p>
+    <!-- Navigation -->
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#technologies">Technologies</a>
+        <a href="#setup">Setup</a>
+        <a href="#pipeline">Pipeline</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>🚀 Jenkins CI/CD Pipeline Automation</h1>
+        <p>Automated Software Delivery with Continuous Integration & Deployment</p>
+        <div>
+            <span class="hero-badge">Jenkins</span>
+            <span class="hero-badge">GitHub</span>
+            <span class="hero-badge">DevOps</span>
+            <span class="hero-badge">Linux</span>
         </div>
     </div>
 
-    <script>
-        function updateDateTime() {
-            const now = new Date();
-            document.getElementById('datetimeDisplay').textContent = now.toString();
-        }
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
-    </script>
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>📌 Project Overview</h2>
+            <p>This project demonstrates a complete <strong>CI/CD pipeline using Jenkins</strong>, where code pushed to GitHub is automatically built and deployed to a web server. The pipeline automates the entire software delivery process, reducing manual interventions and ensuring consistent deployments.</p>
+
+            <h3 style="color: #667eea; margin-top: 1.5rem;">Key Features:</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>🔄 Automation</h3>
+                    <p>Code changes trigger automatic builds and deployments</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Fast Deployment</h3>
+                    <p>Reduces deployment time from manual hours to minutes</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Reliability</h3>
+                    <p>Consistent and reproducible deployment process</p>
+                </div>
+                <div class="card">
+                    <h3>🔐 Security</h3>
+                    <p>Automated testing and credential management</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section id="architecture">
+            <h2>🏗️ Architecture Workflow</h2>
+            <p>The pipeline follows a sequential flow from development to production:</p>
+
+            <div class="architecture-box">Developer (VS Code)
+        ↓
+   GitHub Repository
+        ↓ 
+  (Webhook Trigger)
+   Jenkins Server
+  (Public IP)
+        ↓
+  Build & Deployment
+        ↓
+   Web Server
+(Live Website)</div>
+
+            <h3 style="color: #667eea; margin-top: 1.5rem;">Workflow Steps:</h3>
+            <ol style="margin-left: 2rem; line-height: 2;">
+                <li>Developer writes code in VS Code</li>
+                <li>Code is pushed to GitHub repository</li>
+                <li>GitHub webhook automatically triggers Jenkins</li>
+                <li>Jenkins pulls the latest code from repository</li>
+                <li>Jenkins executes build and deployment process</li>
+                <li>Website is updated automatically on web server</li>
+            </ol>
+        </section>
+
+        <!-- Technologies Section -->
+        <section id="technologies">
+            <h2>⚙️ Tools & Technologies Used</h2>
+            <div class="tech-stack">
+                <div class="tech">Jenkins</div>
+                <div class="tech">Git & GitHub</div>
+                <div class="tech">VS Code</div>
+                <div class="tech">Linux Server</div>
+                <div class="tech">Webhooks</div>
+                <div class="tech">CI/CD</div>
+                <div class="tech">Automation</div>
+                <div class="tech">Shell Scripting</div>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 1.5rem; margin-bottom: 1rem;">Technology Stack Details:</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>📦 Jenkins</h3>
+                    <ul>
+                        <li>CI/CD Automation Server</li>
+                        <li>Job orchestration</li>
+                        <li>Git & Pipeline plugins</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔗 GitHub</h3>
+                    <ul>
+                        <li>Version control</li>
+                        <li>Repository hosting</li>
+                        <li>Webhook integration</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🖥️ Linux Server</h3>
+                    <ul>
+                        <li>Jenkins hosting</li>
+                        <li>Web server</li>
+                        <li>Application runtime</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🔧 Tools</h3>
+                    <ul>
+                        <li>Shell scripting</li>
+                        <li>Git commands</li>
+                        <li>File management</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup & Configuration Section -->
+        <section id="setup">
+            <h2>🔧 Setup & Configuration Steps</h2>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Jenkins Setup</h4>
+                    <p>Installed Jenkins on Linux server and configured it to be accessible via a public IP address.</p>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Installed Jenkins on Linux server</li>
+                        <li>Configured Jenkins and exposed via Public IP</li>
+                        <li>Installed required plugins: Git Plugin, Pipeline Plugin</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>GitHub Integration</h4>
+                    <p>Created repository and configured authentication for Jenkins to access GitHub.</p>
+                    <div class="code-block">git init
+git add .
+git commit -m "Initial commit"
+git push origin main</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Webhook Configuration</h4>
+                    <p>Configured GitHub webhook to automatically trigger Jenkins on every code push.</p>
+                    <div class="code-block">http://&lt;JENKINS_PUBLIC_IP&gt;:8080/github-webhook/</div>
+                    <p style="margin-top: 0.5rem;">✔ Automatically triggers Jenkins on every push</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Jenkins Job Configuration</h4>
+                    <p>Created a Jenkins job and configured build triggers and GitHub credentials.</p>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Created Freestyle/Pipeline job</li>
+                        <li>Configured GitHub repo URL</li>
+                        <li>Set branch to: main</li>
+                        <li>Added credentials (PAT)</li>
+                        <li>Set build trigger: GitHub webhook</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>Build & Deployment</h4>
+                    <p>Jenkins executes deployment commands that update the website automatically.</p>
+                    <div class="code-block">rm -f /var/www/html/index.html
+rm -f /var/www/html/index.nginx-debian.html
+cp index.html /var/www/html/</div>
+                    <p style="margin-top: 0.5rem;">✔ Automatically updates website</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline Execution Section -->
+        <section id="pipeline">
+            <h2>▶️ Pipeline Execution Flow</h2>
+            <p>A visual representation of the complete pipeline execution:</p>
+
+            <div class="flow">
+                <div class="flow-item">Developer Pushes Code</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">GitHub Webhook</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Triggers Jenkins</div>
+            </div>
+
+            <div class="flow">
+                <div class="flow-item">Jenkins Pulls Code</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Build Process</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Deploy to Server</div>
+            </div>
+
+            <div class="flow">
+                <div class="flow-item">Website Updated</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Live & Accessible</div>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 2rem;">Benefits of This Approach:</h3>
+            <ul style="margin-left: 2rem; line-height: 2; margin-top: 1rem;">
+                <li><strong>Zero Manual Intervention:</strong> Entire process is automated</li>
+                <li><strong>Fast Feedback:</strong> Developers know deployment status immediately</li>
+                <li><strong>Reduced Errors:</strong> Consistent deployment process eliminates human errors</li>
+                <li><strong>Scalability:</strong> Easy to extend for multiple environments</li>
+                <li><strong>Audit Trail:</strong> Jenkins logs all build and deployment activities</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 DevOps Portfolio - Jenkins CI/CD Pipeline Automation</p>
+        <p>Showcasing modern DevOps practices and infrastructure automation</p>
+    </footer>
 </body>
 </html>
